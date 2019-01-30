@@ -1,0 +1,37 @@
+library(GenomicRanges)
+library(genomation)
+library(rtracklayer)
+library(RColorBrewer)
+
+setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
+colfunc <- colorRampPalette(c("white","grey","black"))
+
+#load data
+DSMF<- import.bw("./sm_allCs_combined_M_chr.bw")
+
+#Load the feature file
+rexsites<- import("./featurefiles/rexsitesce11.gtf", "gtf")
+#seqlevels(rexsites)<- nochr
+#Extend gr to 1000bp on each side of the rex sites
+rexsites2000bp<- resize(rexsites, 2000, fix = "center", use.names=TRUE)
+#Extend gr to 100bp on each side of the rex sites
+rexsites200bp<- resize(rexsites, 200, fix = "center", use.names=TRUE)
+
+#Make score matrix
+sm_DSMF_rex1 = ScoreMatrix(target = DSMF,
+                          windows = rexsites2000bp,
+                          strand.aware = TRUE, weight.col = "score")
+sm_DSMF_rex2 = ScoreMatrix(target = DSMF,
+                          windows = rexsites200bp,
+                          strand.aware = TRUE, weight.col = "score")
+
+#Heatmap plots
+heatMatrix(sm_DSMF_rex1,
+           xcoords = c(-1000,1000),
+           winsorize = c(1,99),
+           col = colfunc(10))
+heatMatrix(sm_DSMF_rex2,
+           xcoords = c(-100,100),
+           winsorize = c(1,99),
+           col = colfunc(10))
+
