@@ -1,0 +1,38 @@
+library(GenomicRanges)
+library(genomation)
+library(rtracklayer)
+library(RColorBrewer)
+
+setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
+colfunc <- colorRampPalette(c("blue","grey","yellow"))
+
+#load data
+DSMF<- import.bw("./Bigwiggle/sm_allCs_combined_M.bw")
+
+#Load the feature files
+alltss_chrA<- import("./featurefiles/alltss_chrA.gtf", "gtf")
+alltss_chrX<- import("./featurefiles/alltss_chrX.gtf", "gtf")
+#seqlevels(rexsites)<- nochr
+#Extend gr to 1000bp on each side of the rex sites
+flanking_tss_A <- resize(alltss_chrA, 2000, fix="center", use.names=TRUE)
+flanking_tss_X <- resize(alltss_chrX, 2000, fix="center", use.names=TRUE)
+
+
+#Make score matrix
+sm_DSMF_TSSA = ScoreMatrix(target = DSMF,
+                           windows = flanking_tss_A,
+                           strand.aware = TRUE, weight.col = "score")
+sm_DSMF_TSSX = ScoreMatrix(target = DSMF,
+                           windows = flanking_tss_X,
+                           strand.aware = TRUE, weight.col = "score")
+
+#Heatmap plots
+heatMatrix(sm_DSMF_TSSA,
+           xcoords = c(-1000,1000),
+           winsorize = c(1,99),
+           col = colfunc(10))
+heatMatrix(sm_DSMF_TSSX,
+           xcoords = c(-1000,1000),
+           winsorize = c(1,99),
+           col = colfunc(10))
+
