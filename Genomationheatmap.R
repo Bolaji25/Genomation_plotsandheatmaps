@@ -4,12 +4,12 @@ library(rtracklayer)
 library(RColorBrewer)
 
 setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
-colfunc <- colorRampPalette(c("white","grey","black"))
+colfunc <- colorRampPalette(c("yellow","grey","cyan"))
 
 #load data
 DSMF<- import.bw("./sm_allCs_combined_M_chr.bw")
 
-#Load the feature file
+#Load the feature files
 rexsites<- import("./featurefiles/rexsitesce11.gtf", "gtf")
 #seqlevels(rexsites)<- nochr
 #Extend gr to 1000bp on each side of the rex sites
