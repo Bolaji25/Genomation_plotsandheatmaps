@@ -2,12 +2,13 @@ library(GenomicRanges)
 library(genomation)
 library(rtracklayer)
 library(RColorBrewer)
+library(BSgenome)
 
-setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
+#setwd("Path_to_a_directory_higher_than_data")
 colfunc <- colorRampPalette(c("black","blue","yellow"))
 
 #load data
-DSMF<- import.bw("./Bigwiggle/sm_allCs_combined_M.bw")
+DSMF<- import.bw("./Path_to_data")
 
 #Load the feature files
 alltss_chrA<- import("./featurefiles/alltss_chrA.gtf", "gtf")
