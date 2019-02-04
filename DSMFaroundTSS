@@ -5,7 +5,7 @@ library(RColorBrewer)
 library(BSgenome)
 
 #setwd("Path_to_a_directory_higher_than_data")
-colfunc <- colorRampPalette(c("black","blue","yellow"))
+colfunc <- colorRampPalette(c("black","yellow","blue"))
 
 #load data
 DSMF<- import.bw("./Path_to_data")
