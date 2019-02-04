@@ -4,7 +4,7 @@ library(rtracklayer)
 library(RColorBrewer)
 
 setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
-colfunc <- colorRampPalette(c("yellow","grey","cyan"))
+colfunc <- colorRampPalette(c("black","yellow","blue"))
 
 #load data
 DSMF<- import.bw("./sm_allCs_combined_M_chr.bw")
