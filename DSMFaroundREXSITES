@@ -3,7 +3,7 @@ library(genomation)
 library(rtracklayer)
 library(RColorBrewer)
 
-setwd("/Users/imac/Desktop/Bolaji/PhD/analysis/Bioinformatics_scripts")
+setwd("/Users/imac/Desktop/Bolaji/PhD/PhD/Project_experiments/General/analysis/Bioinformatics_scripts")
 colfunc <- colorRampPalette(c("black","yellow","blue"))
 
 #load data
@@ -25,13 +25,18 @@ sm_DSMF_rex2 = ScoreMatrix(target = DSMF,
                           windows = rexsites200bp,
                           strand.aware = TRUE, weight.col = "score")
 
+#create a clustering function
+clusterh1<- function(sm_DSMF_rex1) cutree(hclust(dist(sm_DSMF_rex1), method = "complete"), k = 5)
+plot(hclust(dist(sm_DSMF_rex1), method = "complete"))
+clusterh2<- function(sm_DSMF_rex2) cutree(hclust(dist(sm_DSMF_rex2), method = "complete"), k = 2)
+plot(hclust(dist(sm_DSMF_rex2), method = "complete"))
 #Heatmap plots
 heatMatrix(sm_DSMF_rex1,
            xcoords = c(-1000,1000),
-           winsorize = c(1,99),
+           winsorize = c(1,99), clustfun = clusterh1,
            col = colfunc(10))
 heatMatrix(sm_DSMF_rex2,
            xcoords = c(-100,100),
-           winsorize = c(1,99),
+           winsorize = c(1,99), clustfun = clusterh2,
            col = colfunc(10))
 
