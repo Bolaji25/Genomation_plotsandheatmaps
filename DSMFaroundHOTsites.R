@@ -46,6 +46,10 @@ sm_DSMF_hotsitesX = ScoreMatrix(target = DSMF,
 sm_DSMF_hotsites = ScoreMatrix(target = DSMF,
                                 windows = flankingallhotsites,
                                 strand.aware = TRUE, weight.col = "score")
+saveRDS(heatMatrix(sm_DSMF_hotsitesA,
+                   xcoords = c(-1000,1000),
+                   winsorize = c(1,99),
+                   col = colfunc(10)), "../featurefiles/sm_DSMF_hotsitesA.RDS", "RDS")
 #Make score matrix for 200bp window
 #sm_DSMF_hotsitesA100 = ScoreMatrix(target = DSMF,
  #                               windows = flanking_hotsites_A100 ,
