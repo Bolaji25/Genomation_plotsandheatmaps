@@ -62,7 +62,7 @@ saveRDS(heatMatrix(sm_DSMF_hotsitesA,
   #                             strand.aware = TRUE, weight.col = "score")
 
 #Heatmap plots for 2000bp window
-A<-heatMatrix(sm_DSMF_hotsitesA,
+heat_mt_dsmfhotsitesA=heatMatrix(sm_DSMF_hotsitesA,
            xcoords = c(-1000,1000),
            winsorize = c(1,99),
            col = colfunc(10))
