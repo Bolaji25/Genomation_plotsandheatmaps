@@ -3,14 +3,14 @@ library(genomation)
 library(rtracklayer)
 library(RColorBrewer)
 
-setwd("/Users/imac/Desktop/Bolaji/PhD/PhD/Project_experiments/General/analysis/Bioinformatics_scripts")
+#setwd("/Users/imac/Desktop/Bolaji/PhD/PhD/Project_experiments/General/analysis/Bioinformatics_scripts")
 colfunc <- colorRampPalette(c("black","yellow","blue"))
 
 #load data
-DSMF<- import.bw("./sm_allCs_combined_M_chr.bw")
+DSMF<- import.bw("../Bigwiggle/sevinc/sm_allCs_combined_M_ucsc.bw")
 
 #Load the feature files
-rexsites<- import("./featurefiles/rexsitesce11.gtf", "gtf")
+rexsites<- import("../featurefiles/rexsitesce11.gtf", "gtf")
 #seqlevels(rexsites)<- nochr
 #Extend gr to 1000bp on each side of the rex sites
 rexsites2000bp<- resize(rexsites, 2000, fix = "center", use.names=TRUE)
@@ -45,7 +45,7 @@ saveRDS(sm_DSMF_rex2, "../featurefiles/sm_DSMF_rex200.RDS")
 
 ################################################################################################
 #######Plotting with ggplot####################################################################
-data <- readRDS("../featurefiles/sm_DSMF_rex2000.RDS", "RDS")
+#data <- readRDS("../featurefiles/sm_DSMF_rex2000.RDS", "RDS")
 data <- readRDS("../featurefiles/sm_DSMF_rex200.RDS", "RDS")
 library(ggplot2)
 library(genomation)
@@ -100,13 +100,13 @@ plotAveragedSMF<-function(data,         #genomation ScoreMatrix
                                 limits = c(0,width_data),
                                 expand=c(0,0),
                                 breaks=c(0,width_data/2,width_data),
-                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data))) + 
+                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data/2))) + 
     ggplot2::ylab(myYlab) + 
     ggplot2::ggtitle(title)
   return(p)
 }
 
-pdf("dSMF_at_rex_sites.pdf")
-plotAveragedSMF(data,myYlab="Genes",myXlab="Distance to",feature_label="rex sites",title="dSMF at rex sites")
+pdf("dSMF_at_rex_sites200.pdf")
+plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="rex sites",title="dSMF at rex sites")
 dev.off()
 

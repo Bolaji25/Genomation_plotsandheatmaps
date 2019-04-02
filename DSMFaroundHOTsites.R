@@ -27,7 +27,7 @@ hotsitesA<- import("../featurefiles/hotsiteschrA.gtf", "gtf")
 hotsitesX<- import("../featurefiles/hotsiteschrX.gtf", "gtf")
 hotsites<- import("../featurefiles/hotsites_ce11_2kb.gtf")
 #Extend gr to 1000bp on each side of the hotsites sites
-flanking_hotsites_A <- resize(hotsitesA, 2000, fix="center", use.names=TRUE)
+flanking_hotsites_A <- resize(hotsitesA, 1000, fix="center", use.names=TRUE)
 flanking_hotsites_X <- resize(hotsitesX, 2000, fix="center", use.names=TRUE)
 flankingallhotsites <- resize(hotsites, 2000, fix="center", use.names=TRUE)
 #Extend gr to 100bp on each side of the rex sites
@@ -89,8 +89,8 @@ heatMatrix(sm_DSMF_hotsites,
 
 ################################################################################################
 #######Plotting with ggplot####################################################################
-data <- readRDS("../featurefiles/sm_DSMF_hotsitesA.RDS")
-data <- readRDS("../featurefiles/sm_DSMF_hotsitesX.RDS")
+#data <- readRDS("../featurefiles/sm_DSMF_hotsitesA.RDS")
+#data <- readRDS("../featurefiles/sm_DSMF_hotsitesX.RDS")
 data <- readRDS("../featurefiles/sm_DSMF_hotsitesall.RDS")
 library(ggplot2)
 library(genomation)
@@ -145,12 +145,12 @@ plotAveragedSMF<-function(data,         #genomation ScoreMatrix
                                 limits = c(0,width_data),
                                 expand=c(0,0),
                                 breaks=c(0,width_data/2,width_data),
-                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data))) + 
+                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data/2))) + 
     ggplot2::ylab(myYlab) + 
     ggplot2::ggtitle(title)
   return(p)
 }
 
-pdf("dSMF_at_HOT_sites.pdf")
-plotAveragedSMF(data,myYlab="Genes",myXlab="Distance to",feature_label="HOT sites",title="dSMF at HOT sites")
+pdf("dSMF_at_allHOT_sites.pdf")
+plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="HOT sites",title="dSMF at HOT sites")
 dev.off()

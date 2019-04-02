@@ -8,11 +8,13 @@ library(BSgenome)
 colfunc <- colorRampPalette(c("yellow","blue"))
 
 #load data
-DSMF<- import.bw("./Path_to_data")
+DSMF<- import.bw("../Bigwiggle/sevinc/sm_allCs_combined_M_ucsc.bw")
 
 #Load the feature files
-alltss_chrA<- import("./featurefiles/alltss_chrA.gtf", "gtf")
-alltss_chrX<- import("./featurefiles/alltss_chrX.gtf", "gtf")
+alltss_chrA<- import("../featurefiles/alltss_chrA.gtf", "gtf")
+seqlevels(alltss_chrA)<- paste0("chr", seqlevels(alltss_chrA))
+alltss_chrX<- import("../featurefiles/alltss_chrX.gtf", "gtf")
+seqlevels(alltss_chrX)<- paste0("chr", seqlevels(alltss_chrX))
 #seqlevels(rexsites)<- nochr
 #Extend gr to 1000bp on each side of the rex sites
 flanking_tss_A <- resize(alltss_chrA, 2000, fix="center", use.names=TRUE)
@@ -40,7 +42,7 @@ saveRDS(sm_DSMF_TSSX, "../featurefiles/sm_DSMF_TSSX.RDS")
    #        col = colfunc(10))
 ################################################################################################
 #######Plotting with ggplot####################################################################
-data <- readRDS("../featurefiles/sm_DSMF_TSSA.RDS")
+#data <- readRDS("../featurefiles/sm_DSMF_TSSA.RDS")
 data <- readRDS("../featurefiles/sm_DSMF_TSSX.RDS")
 library(ggplot2)
 library(genomation)
@@ -60,7 +62,7 @@ library(tidyr)
 plotAveragedSMF<-function(data,         #genomation ScoreMatrix
                           myYlab,       #label for Y axis (type of loci)
                           myXlab="CpG/GpC position", #label for X axis
-                          feature_label="TSS",
+                          feature_label="rex",
                           title=NULL)
 {
   #Transform genomation matrix to data frame
@@ -95,13 +97,13 @@ plotAveragedSMF<-function(data,         #genomation ScoreMatrix
                                 limits = c(0,width_data),
                                 expand=c(0,0),
                                 breaks=c(0,width_data/2,width_data),
-                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data))) + 
+                                labels=c(paste0("-",width_data/2),feature_label,paste0(width_data/2))) + 
     ggplot2::ylab(myYlab) + 
     ggplot2::ggtitle(title)
   return(p)
 }
 
-pdf("dSMF_at_TSS.pdf")
-plotAveragedSMF(data,myYlab="Genes",myXlab="Distance to",feature_label="TSS",title="dSMF at TSS")
+pdf("dSMF_at_XTSS.pdf")
+plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="TSS",title="dSMF at X TSS")
 dev.off()
 
