@@ -45,8 +45,8 @@ saveRDS(sm_DSMF_rex2, "../featurefiles/sm_DSMF_rex200.RDS")
 
 ################################################################################################
 #######Plotting with ggplot####################################################################
-#data <- readRDS("../featurefiles/sm_DSMF_rex2000.RDS", "RDS")
-data <- readRDS("../featurefiles/sm_DSMF_rex200.RDS", "RDS")
+data <- readRDS("../featurefiles/sm_DSMF_rex2000.RDS", "RDS")
+#data <- readRDS("../featurefiles/sm_DSMF_rex200.RDS", "RDS")
 library(ggplot2)
 library(genomation)
 library(tidyr)
@@ -106,7 +106,10 @@ plotAveragedSMF<-function(data,         #genomation ScoreMatrix
   return(p)
 }
 
-pdf("dSMF_at_rex_sites200.pdf")
-plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="rex sites",title="dSMF at rex sites")
+#pdf("dSMF_at_rex_sites200.pdf")
+#plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="rex sites",title="dSMF at rex sites")
+ggsave("dsmfrexsite.tiff",
+       plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="TSS",title="dSMF at rex sites"), 
+       units="mm", width=dim(data)[2]/10,height=dim(data)[1]/10)
 dev.off()
 

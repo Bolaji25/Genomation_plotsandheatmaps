@@ -151,6 +151,9 @@ plotAveragedSMF<-function(data,         #genomation ScoreMatrix
   return(p)
 }
 
-pdf("dSMF_at_allHOT_sites.pdf")
-plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="HOT sites",title="dSMF at HOT sites")
+#pdf("dSMF_at_allHOT_sites.pdf")
+#plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="HOT sites",title="dSMF at HOT sites")
+ggsave("dsmfHOTsites.tiff",
+       plotAveragedSMF(data,myYlab="Genes",myXlab="Position",feature_label="TSS",title="dSMF at HOT sites"), 
+       units="mm", width=dim(data)[2]/10,height=dim(data)[1]/10)
 dev.off()
